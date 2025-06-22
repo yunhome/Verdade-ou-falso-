@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jogo: Adivinhe sobre Lúcifer</title>
+<style>
+  body {
+    background-color: #0d0d0d;
+    color: #e6e6e6;
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    min-height: 100vh;
+  }
+  h1 {
+    color: #e60000;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  #game-container {
+    background: #1a1a1a;
+    border-left: 5px solid #990000;
+    padding: 20px 30px;
+    max-width: 700px;
+    box-shadow: 0 0 15px #000;
+    width: 100%;
+    border-radius: 8px;
+  }
+  #question {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+  }
+  .btns {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+  }
+  button {
+    background-color: #330000;
+    border: none;
+    padding: 12px 30px;
+    color: #fff;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    user-select: none;
+  }
+  button:hover {
+    background-color: #990000;
+  }
+  #feedback {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 1.1em;
+    min-height: 24px;
+    text-align: center;
+    color: #ffcc00;
+  }
+  #score {
+    margin-top: 25px;
+    font-size: 1.2em;
+    text-align: center;
+  }
+  #restart-btn {
+    margin-top: 30px;
+    background-color: #660000;
+    display: none;
+  }
+  #restart-btn:hover {
+    background-color: #cc0000;
+  }
+</style>
+</head>
+<body>
+
+<h1>👁️ Adivinhe sobre Lúcifer</h1>
+
+<div id="game-container">
+  <div id="question">Carregando pergunta...</div>
+  <div class="btns">
+    <button id="btn-true">Sim</button>
+    <button id="btn-false">Não</button>
+  </div>
+  <div id="feedback"></div>
+  <div id="score"></div>
+  <button id="restart-btn">Recomeçar Jogo</button>
+</div>
+
+<script>
+  const perguntas = [
+    { pergunta: "Lúcifer é um anjo caído?", resposta: true },
+    { pergunta: "Lúcifer é o Senhor do Inferno?", resposta: true },
+    { pergunta: "Lúcifer foi criado por um humano?", resposta: false },
+    { pergunta: "Lúcifer tem um irmão chamado Amenadiel?", resposta: true },
+    { pergunta: "Lúcifer não pode sentir dor?", resposta: false }
+  ];
+
+  let index = 0;
+  let score = 0;
+
+  const questionEl = document.getElementById("question");
+  const feedbackEl = document.getElementById("feedback");
+  const scoreEl = document.getElementById("score");
+  const btnTrue = document.getElementById("btn-true");
+  const btnFalse = document.getElementById("btn-false");
+  const restartBtn = document.getElementById("restart-btn");
+
+  function carregarPergunta() {
+    feedbackEl.textContent = "";
+    if(index < perguntas.length) {
+      questionEl.textContent = perguntas[index].pergunta;
+      scoreEl.textContent = `Pergunta ${index + 1} de ${perguntas.length}`;
+    } else {
+      questionEl.textContent = "Fim do jogo! Obrigada por jogar.";
+      scoreEl.textContent = `Você acertou ${score} de ${perguntas.length} perguntas.`;
+      btnTrue.style.display = "none";
+      btnFalse.style.display = "none";
+      restartBtn.style.display = "block";
+    }
+  }
+
+  function responder(respostaUsuario) {
+    if(index >= perguntas.length) return;
+    if(respostaUsuario === perguntas[index].resposta) {
+      feedbackEl.textContent = "✔️ Correto!";
+      score++;
+    } else {
+      feedbackEl.textContent = "❌ Errado!";
+    }
+    index++;
+    setTimeout(carregarPergunta, 1500);
+  }
+
+  btnTrue.addEventListener("click", () => responder(true));
+  btnFalse.addEventListener("click", () => responder(false));
+  restartBtn.addEventListener("click", () => {
+    index = 0;
+    score = 0;
+    btnTrue.style.display = "inline-block";
+    btnFalse.style.display = "inline-block";
+    restartBtn.style.display = "none";
+    carregarPergunta();
+  });
+
+  carregarPergunta();
+</script>
+
+</body>
+</html>
