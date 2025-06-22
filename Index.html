@@ -74,6 +74,12 @@
   #restart-btn:hover {
     background-color: #cc0000;
   }
+  #ranking {
+    margin-top: 20px;
+    font-size: 1em;
+    text-align: center;
+    color: #ccc;
+  }
 </style>
 </head>
 <body>
@@ -89,6 +95,7 @@
   <div id="feedback"></div>
   <div id="score"></div>
   <button id="restart-btn">Recomeçar Jogo</button>
+  <div id="ranking"></div>
 </div>
 
 <script>
@@ -97,7 +104,12 @@
     { pergunta: "Lúcifer é o Senhor do Inferno?", resposta: true },
     { pergunta: "Lúcifer foi criado por um humano?", resposta: false },
     { pergunta: "Lúcifer tem um irmão chamado Amenadiel?", resposta: true },
-    { pergunta: "Lúcifer não pode sentir dor?", resposta: false }
+    { pergunta: "Lúcifer não pode sentir dor?", resposta: false },
+    { pergunta: "Maze é uma demônio leal a Lúcifer?", resposta: true },
+    { pergunta: "Chloe tem poderes sobrenaturais?", resposta: false },
+    { pergunta: "Ella Lopez é uma cientista que também tem fé?", resposta: true },
+    { pergunta: "Amenadiel é contra Lúcifer durante toda a série?", resposta: false },
+    { pergunta: "O Lux é o clube de Lúcifer em Los Angeles?", resposta: true }
   ];
 
   let index = 0;
@@ -109,6 +121,7 @@
   const btnTrue = document.getElementById("btn-true");
   const btnFalse = document.getElementById("btn-false");
   const restartBtn = document.getElementById("restart-btn");
+  const rankingEl = document.getElementById("ranking");
 
   function carregarPergunta() {
     feedbackEl.textContent = "";
@@ -121,6 +134,7 @@
       btnTrue.style.display = "none";
       btnFalse.style.display = "none";
       restartBtn.style.display = "block";
+      atualizarRanking();
     }
   }
 
@@ -136,6 +150,16 @@
     setTimeout(carregarPergunta, 1500);
   }
 
+  function atualizarRanking() {
+    const melhorPontuacao = localStorage.getItem('melhorPontuacaoLucifer') || 0;
+    if(score > melhorPontuacao) {
+      localStorage.setItem('melhorPontuacaoLucifer', score);
+      rankingEl.textContent = `🎉 Novo recorde! Sua melhor pontuação é: ${score} acertos.`;
+    } else {
+      rankingEl.textContent = `Sua melhor pontuação: ${melhorPontuacao} acertos. Tente superar!`;
+    }
+  }
+
   btnTrue.addEventListener("click", () => responder(true));
   btnFalse.addEventListener("click", () => responder(false));
   restartBtn.addEventListener("click", () => {
@@ -144,6 +168,7 @@
     btnTrue.style.display = "inline-block";
     btnFalse.style.display = "inline-block";
     restartBtn.style.display = "none";
+    rankingEl.textContent = "";
     carregarPergunta();
   });
 
