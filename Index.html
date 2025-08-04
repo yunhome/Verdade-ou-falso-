@@ -105,6 +105,167 @@
     <section>
       <h2>Dicas de autocuidado</h2>
       <ul>
+        <li><strong>Respire fundo por 1 minuto:</strong> ajuda a acalmar sua mente e reduzir o estresse.</li>
+        <li><strong>Evite se comparar com os outros:</strong> cada pessoa tem seu tempo e seu jeito de aprender.</li>
+        <li><strong>Durma bem e se alimente direito:</strong> seu corpo precisa estar equilibrado para sua mente funcionar bem.</li>
+        <li><strong>Organize sua rotina com pausas:</strong> intervalos ajudam a manter a concentração e o bem-estar.</li>
+        <li><strong>Fale com alguém de confiança:</strong> dividir sentimentos torna o peso emocional mais leve.</li>
+        <li><strong>Escreva o que está sentindo:</strong> colocar no papel ajuda a entender melhor suas emoções.</li>
+        <li><strong>Faça algo que você ama:</strong> mesmo por poucos minutos, isso renova suas energias e traz conforto.</li>
+      </ul>
+      <button onclick="abrirModal()">Mensagem especial 💚</button>
+    </section>
+
+    <section>
+      <h2>Rotina saudável para estudantes</h2>
+      <ul>
+        <li>🌅 <strong>Acorde no mesmo horário todos os dias:</strong> isso regula seu relógio biológico e melhora o foco.</li>
+        <li>📚 <strong>Separe tempo para estudar e descansar:</strong> equilíbrio é essencial para aprender sem se sobrecarregar.</li>
+        <li>🍎 <strong>Faça pausas para se alimentar bem:</strong> refeições equilibradas afetam diretamente seu humor e energia.</li>
+        <li>🏃‍♀️ <strong>Inclua uma caminhada ou alongamento diário:</strong> movimentar o corpo alivia tensões e aumenta a disposição.</li>
+        <li>🛏️ <strong>Durma pelo menos 7 a 8 horas por noite:</strong> o sono é vital para a memória, aprendizado e emoções.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Playlist calmante 🎵</h2>
+      <p>Ouça uma playlist feita especialmente para momentos de relaxamento e foco:</p>
+      <ul>
+        <li><a href="https://open.spotify.com/playlist/37i9dQZF1DX3Ogo9pFvBkY" target="_blank">🎧 Ouvir no Spotify</a></li>
+        <li><a href="https://music.youtube.com/" target="_blank">🎵 Ouvir no YouTube Music</a> <!-- Cole sua playlist aqui depois --></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Ajuda profissional</h2>
+      <p>Se estiver se sentindo sobrecarregado, procure um psicólogo da escola ou um profissional de saúde mental.</p>
+    </section>
+
+    <section>
+      <h2>Teste rápido de saúde mental</h2>
+      <form id="testeSaudeMental">
+        <p>1. Você sente que consegue descansar mentalmente ao longo do dia?</p>
+        <label><input type="radio" name="q1" value="1"> Raramente</label><br>
+        <label><input type="radio" name="q1" value="2"> Às vezes</label><br>
+        <label><input type="radio" name="q1" value="3"> Frequentemente</label><br><br>
+
+        <p>2. Como você reage ao estresse no dia a dia?</p>
+        <label><input type="radio" name="q2" value="1"> Me sinto sobrecarregado com facilidade</label><br>
+        <label><input type="radio" name="q2" value="2"> Depende do dia</label><br>
+        <label><input type="radio" name="q2" value="3"> Lido bem com o estresse</label><br><br>
+
+        <p>3. Você tem conseguido dormir bem?</p>
+        <label><input type="radio" name="q3" value="1"> Não</label><br>
+        <label><input type="radio" name="q3" value="2"> Mais ou menos</label><br>
+        <label><input type="radio" name="q3" value="3"> Sim</label><br><br>
+
+        <p>4. Você se sente animado para as atividades do dia?</p>
+        <label><input type="radio" name="q4" value="1"> Não mesmo</label><br>
+        <label><input type="radio" name="q4" value="2"> Às vezes</label><br>
+        <label><input type="radio" name="q4" value="3"> Sim, quase sempre</label><br><br>
+
+        <p>5. Você conversa com alguém sobre como se sente?</p>
+        <label><input type="radio" name="q5" value="1"> Quase nunca</label><br>
+        <label><input type="radio" name="q5" value="2"> De vez em quando</label><br>
+        <label><input type="radio" name="q5" value="3"> Sim, regularmente</label><br><br>
+
+        <button type="button" onclick="calcularResultado()">Ver resultado</button>
+      </form>
+      <div id="resultadoQuiz" style="margin-top: 20px; font-weight: bold;"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Feito com carinho 💚</p>
+  </footer>
+
+  <!-- Modal -->
+  <div id="janelaModal" class="modal">
+    <div class="modal-conteudo">
+      <span class="fechar" onclick="fecharModal()">&times;</span>
+      <h2>Você importa 💚</h2>
+      <p>Lembre-se: sua saúde mental é prioridade. Nunca tenha medo de pedir ajuda!</p>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    function abrirModal() {
+      document.getElementById("janelaModal").style.display = "block";
+    }
+
+    function fecharModal() {
+      document.getElementById("janelaModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("janelaModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+
+    function calcularResultado() {
+      const perguntas = ['q1', 'q2', 'q3', 'q4', 'q5'];
+      let total = 0;
+
+      for (let i = 0; i < perguntas.length; i++) {
+        const resposta = document.querySelector(`input[name="${perguntas[i]}"]:checked`);
+        if (resposta) {
+          total += parseInt(resposta.value);
+        } else {
+          document.getElementById("resultadoQuiz").innerText = "Responda todas as perguntas, por favor.";
+          return;
+        }
+      }
+
+      let resultado = "";
+      if (total <= 7) {
+        resultado = "⚠️ Sua saúde mental pode estar sobrecarregada. Considere buscar apoio ou conversar com alguém de confiança.";
+      } else if (total <= 11) {
+        resultado = "🟡 Você está em um ponto de atenção. Tente equilibrar suas emoções com pausas e momentos de autocuidado.";
+      } else {
+        resultado = "🟢 Sua saúde mental parece estar bem! Continue cuidando de si e mantendo uma rotina saudável.";
+      }
+
+      document.getElementById("resultadoQuiz").innerText = resultado;
+    }
+  </script>
+</body>
+                                                                                                                       </html>      overflow: auto;
+      background-color: rgba(0,0,0,0.4);
+    }
+
+    .modal-conteudo {
+      background-color: #FAFAF5;
+      margin: auto;
+      padding: 20px;
+      border: 1px solid #A3B18A;
+      width: 80%;
+      max-width: 400px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .fechar {
+      color: #888;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cuide da Sua Mente</h1>
+    <p>Um espaço para apoiar a saúde mental dos estudantes</p>
+  </header>
+
+  <main>
+    <section>
+      <h2>Dicas de autocuidado</h2>
+      <ul>
         <li>Respire fundo por 1 minuto</li>
         <li>Evite se comparar com os outros</li>
         <li>Durma bem e se alimente direito</li>
